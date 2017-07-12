@@ -215,4 +215,4 @@ class TestNumber(unittest.TestCase):
         self.assertEqual( self.number2.to_int(), 11**2 * 3**3 * 5 )
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
