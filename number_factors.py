@@ -139,6 +139,9 @@ class NumberFact ():
         return self
 
 
+# ++++++++++++++++++++++++++++++++++++++++++++++++++
+#                   tests
+# ++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 class TestNumber(unittest.TestCase):
