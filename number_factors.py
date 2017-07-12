@@ -3,8 +3,9 @@ import collections
 import unittest
 import copy
 
+import prime_numbers
 
-prime_set = set( [2,3,5,7,11,13,17,19,23] )
+
 
 class NumberFact ():
     '''
@@ -48,7 +49,7 @@ class NumberFact ():
 
     @staticmethod
     def check_prime ( prime ):
-        if prime not in prime_set:
+        if prime not in prime_numbers.primes_set:
             raise ValueError( "'{}' is not prime".format(prime) )
         # or
         #assert k in prime_set
