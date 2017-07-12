@@ -1,5 +1,12 @@
 import unittest
 
+'''
+This is temporary file
+
+it creates prime numbers and store them in 
+set "prmes_set" and list "primes"
+'''
+
 
 maximum_prime = 1000000
 maximum_hledane = 2**500500
