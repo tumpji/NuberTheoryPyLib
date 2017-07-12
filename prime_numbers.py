@@ -17,24 +17,23 @@ for i in range(2,maximum_prime):
         for y in range(i+i, maximum_prime, i):
             sieve[y] = 1
 
-primes = map( lambda (i,d): i, filter(lambda (i,d) : d == 0, enumerate(sieve)))
-
-
-
-primes      = primes[2:]
+primes = [ i for (i,d) in enumerate(sieve) if d == 0 ][2:]
 primes_set  = set(primes)
 
-
+sieve = None
 
 class TestPrime(unittest.TestCase):
-    def test_obsahuje (self):
+    def test_random (self):
         self.assertTrue( 2 in primes )
         self.assertTrue( 3 in primes )
         self.assertTrue( 17 in primes )
         self.assertTrue( 11 in primes )
         self.assertTrue( 97 in primes )
         self.assertTrue( 1 not in primes )
-    def test_poradi (self):
+    def test_first_few (self):
+        for i, p in enumerate([2,3,5,7,11,13,17]):
+            self.assertEqual( p, primes[i] )
+    def test_order (self):
         for i in range(1,len(primes)):
             self.assertTrue( primes[i-1] < primes[i] )
     def test_primes_set (self):
