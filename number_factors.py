@@ -182,6 +182,10 @@ class TestNumber(unittest.TestCase):
     def test_init_number_1 (self):
         m = NumberFact( number=1 )
         self.assertTrue( len(m.factorization) == 0 )
+    def test_init_number_10 (self):
+        # this test is temporary
+        with self.assertRaises( NotImplementedError ):
+            m = NumberFact( number=2 )
 
     def test_copy (self):
         a = NumberFact( self.number2 )
