@@ -29,8 +29,8 @@ class CacheFile:
     store location is in folder "test_cache"
     '''
 
-    def __init__ (self):
-        self.cache_dir = 'test_cache'
+    def __init__ (self, cache_dir='cache_folder'):
+        self.cache_dir = cache_dir
 
         try :
             os.mkdir( self.cache_dir  )
@@ -64,12 +64,13 @@ class CacheFile:
 
     @staticmethod
     def _load_url (url):
+        encoding = 'UTF8'
         try: # python3
             import urllib.request
-            return urllib.request.urlopen(url).read().decode('utf-8')
+            return urllib.request.urlopen(url).read().decode(encoding)
         except ImportError: # try python2 way
             import urllib
-            return urllib.urlopen(url).read().decode('utf-8')
+            return urllib.urlopen(url).read().decode(encoding)
 
 
     @staticmethod
@@ -108,13 +109,16 @@ def _horible_function ( ):
 
 class TestCacheFile (unittest.TestCase):
     def setUp (self):
-        self.obj = CacheFile()
+        self.test_dir = 'test_dir'
+        shutil.rmtree( self.test_dir, ignore_errors=True)
+        self.obj = CacheFile(self.test_dir) 
+
+    def tearDown (self):
         shutil.rmtree( self.obj.cache_dir , ignore_errors=True)
-        self.obj = CacheFile() 
 
     def test_url (self):
-        url = 'http://oeis.org/A000010/b000010.txt'
-        s = """from test_utils import CacheFile; url = '{}'; v   =  CacheFile(); """.format(url)
+        url = 'http://www.snort.com'
+        s = """from test_utils import CacheFile; url = '{}'; v   =  CacheFile("{}"); """.format( url, self.test_dir )
 
         t1 = timeit.timeit('v.load_url(url)', number=1, setup=s  )
         t2 = timeit.timeit('v.load_url(url)', number=1, setup=s  )
@@ -125,8 +129,10 @@ class TestCacheFile (unittest.TestCase):
         self.assertTrue( len(v.strip()) )
 
     def test_function (self):
-        t1 = timeit.timeit('v.load_function("_test_horible_function",test_utils._horible_function)', number=1, setup="import test_utils; v = test_utils.CacheFile()")
-        t2 = timeit.timeit('v.load_function("_test_horible_function",test_utils._horible_function)', number=1, setup="import test_utils; v = test_utils.CacheFile()")
+        set_up_fce = '''import test_utils; v = test_utils.CacheFile('{}')'''.format(self.test_dir)
+        function = """v.load_function("_test_horible_function",test_utils._horible_function)"""
+        t1 = timeit.timeit(function, number=1, setup=set_up_fce)
+        t2 = timeit.timeit(function, number=1, setup=set_up_fce)
 
         self.assertTrue( 5*t2 < t1 )
         self.assertEqual(-3124993750001, 
