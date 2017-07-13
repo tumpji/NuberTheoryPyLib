@@ -7,18 +7,22 @@ import prime_numbers
 
 
 
-class NumberFact ():
+class NumberFact (object):
     '''
     this class transforms every number to pair its prime factorization
     with this representation is posible to acomplish more optimal algorithms
     '''
     #def __init__ (self, copya=None, *, prime=None, prime_list=None, prime_dict=None, number=None):
-    def __init__ (self, copya=None, prime=None, prime_list=None, prime_dict=None, number=None):
+    def __init__ (self, copya=None, prime=None, prime_list=None, prime_dict=None, number=None, **kwargs):
         ''' 
         NumberFact(prime=11, prime_list=[2,3], prime_dict={5:4, 2:6}, number=120)
         creates number 11 * 2*3 * 5^4 * 2^6 * [ 120 ]
         '''
         self.factorization = collections.defaultdict(int)
+
+        assert any(map(lambda x: x != None, 
+            [copya, prime, prime_list, prime_dict, number] ))
+        assert len(kwargs) == 0
 
         if copya is not None:
             assert isinstance(copya, NumberFact)
@@ -40,7 +44,10 @@ class NumberFact ():
                 self.factorization[p] += n
 
         if number is not None:
-            raise NotImplementedError
+            if number == 1:
+                pass
+            else:
+                raise NotImplementedError
 
         for p in self.factorization:
             self.check_prime(p)
@@ -165,6 +172,16 @@ class TestNumber(unittest.TestCase):
         a = NumberFact( prime_dict=dict(self.number1.factorization) )
         m =self.number1.factorization 
         self.assertEqual( a.factorization, m )
+
+    def test_init_error_kwargs (self):
+        with self.assertRaises( AssertionError ):
+            NumberFact( somethingbad=12 )
+    def test_init_error_no_args (self):
+        with self.assertRaises( AssertionError ):
+            NumberFact()
+    def test_init_number_1 (self):
+        m = NumberFact( number=1 )
+        self.assertTrue( len(m.factorization) == 0 )
 
     def test_copy (self):
         a = NumberFact( self.number2 )
