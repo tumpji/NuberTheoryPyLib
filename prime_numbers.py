@@ -71,7 +71,7 @@ class PrimeModuleClass (object):
             b) Int  -- it is prime
             c) assertion error -- search for number bigger than maximum_prime const.
         '''
-        mini, maxi   = 0, len(self.prime_array) - 0
+        mini, maxi   = 0, len(self.prime_array) - 1
         assert search < self._maximum_prime
 
         while True:
