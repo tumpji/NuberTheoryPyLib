@@ -115,7 +115,6 @@ class TestPrime(unittest.TestCase):
         t = test_utils.global_CacheFile.load_url(url)
         t = list( int(line.split()[1]) for line in t.split('\n') if len(line) )
         cls.loaded_primes = t
-        print( t )
     
     @staticmethod
     def get_random_index ( count, f, to ):
@@ -145,8 +144,19 @@ class TestPrime(unittest.TestCase):
                 t = self.object_of_interrest.prime_search(p)
                 self.assertIsNone(t)
 
+    def test_factorization ( self ):
+        raise self.SkipTest('not implemented')
+
+
     def test_from_internet (self):
-        raise NotImplementedError
+        maximum_prime_index = min( \
+                len(self.loaded_primes), \
+                len(self.object_of_interrest.prime_array) \
+                ) 
+        for i in self.get_random_index( 1000, 0, maximum_prime_index ):
+            p1 = self.loaded_primes[i]
+            p2 = self.object_of_interrest.prime_array[i]
+            self.assertEqual( p1, p2 )
 
 
 if __name__ == '__main__':
