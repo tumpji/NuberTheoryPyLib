@@ -104,3 +104,4 @@ ENV/
 
 ###
 .*.sw*
+cache_folder/*
