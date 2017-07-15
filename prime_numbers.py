@@ -1,5 +1,7 @@
+
 import unittest
 import test_utils
+import operator
 
 '''
 This is temporary file
@@ -144,8 +146,36 @@ class TestPrime(unittest.TestCase):
                 t = self.object_of_interrest.prime_search(p)
                 self.assertIsNone(t)
 
-    def test_factorization ( self ):
-        raise self.SkipTest('not implemented')
+    def generator_random_primes (self, maximum=None):
+        pa = self.object_of_interrest.prime_array
+        if maximum is None:
+            maximum = len(pa)
+        assert maximum <= len(pa)
+        for i in self.get_random_index( 1000, 0, maximum ):
+            yield pa[i]
+
+    def test_factorization_prime_lut ( self ):
+        # find smallest posible 
+        import bisect
+        maxi = bisect.bisect_left( 
+                self.object_of_interrest.prime_array, 
+                self.object_of_interrest._maximum_lut )
+        
+        for p in self.generator_random_primes( maximum=maxi ):
+            f = self.object_of_interrest.lut_factorization(p)
+            mp = reduce( operator.mul, f )
+            self.assertEqual(p, mp)
+    def test_factorization_lut ( self ):
+        from random import randrange
+        i = 0
+        while i < 1000:
+            number = randrange(4, self.object_of_interrest._maximum_prime)
+            if number in self.object_of_interrest.prime_array: 
+                continue
+            fakt = self.object_of_interrest.lut_factorization(number)
+            n = reduce( operator.mul, fakt )
+            self.assertEquals( number, n )
+            i += 1
 
 
     def test_from_internet (self):
