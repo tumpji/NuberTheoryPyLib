@@ -2,76 +2,11 @@ from __future__ import division
 import copy
 
 import number_factors
-import unittest
 
+import unittest
 import test_utils
 
 
-
-#self.priklady = \ [ (int(x), int(fx)) for (x, fx) in (line.split() for line in soubor) ] print( self.priklady )
-
-
-
-
-
-        
-
-    # @staticmethod
-    # def get_totient_from_prime ( prime ):
-    #     assert isinstance(prime, int)
-    #     return prime - 1
-
-    # @staticmethod
-    # def get_totient_from_dict ( dictionary ):
-    #     assert isinstance(dictionary, dict)
-    #     assert len(prime_list)
-
-    #     totient = get_totient_prime(prime_list[0])
-    #     value   = prime_list[0]
-    #     assert value in primes_set
-
-    #     for p in prime_list[1:]:
-    #         assert p in primes_set
-    #         (totient, value) = get_totient_number( (totient, value), (get_totient_prime(p), p) )
-    #     return totient
-
-    # @staticmethod
-    # def _get_totient_multiplication ( (tot1, num1), (tot2, num2) ):
-    #     ''' 
-    #     multiplication of totient representation
-    #     '''
-    #     num = num1 * num2 
-    #     g = gcd( num1, num2 )
-    #     tot = tot1 * tot2 * g // get_totient_number( g )
-    #     return (num, tot)
-
-
-
-
-
-# def get_totient_number ( number ):
-    # # 1. faktorizace
-    # # <= 2
-    # if   number <= 2 :
-    #     assert number > 0
-    #     return 1
-    # # prime
-    # elif number in primes_set:
-    #     return get_totient_prime(number)
-    # else :
-    #     n   = number
-    #     num = 1
-    #     tot = 1
-
-    #     for p in primes:
-    #         while n % p == 0:
-    #             n //= p
-    #             (num, tot) = mul_totient( (num, tot), (p, get_totient_prime(p)) )
-    #         if n == 1:
-    #             break
-    #     assert n == 1
-    #     get_totient_number.cache[number] = tot
-    #     return tot
 
 class NumberTotient (object):
     def __init__ (self, copye=None, **kwargs):
