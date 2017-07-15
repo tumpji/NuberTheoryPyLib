@@ -56,7 +56,7 @@ class NumberFact (object):
 
     @staticmethod
     def check_prime ( prime ):
-        if prime not in prime_numbers.primes_set:
+        if prime not in prime_numbers.prime_set.prime_array:
             raise ValueError( "'{}' is not prime".format(prime) )
         # or
         #assert k in prime_set

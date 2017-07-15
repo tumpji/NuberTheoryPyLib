@@ -106,6 +106,9 @@ class PrimeModuleClass (object):
             raise NotImplementedError
 
 
+prime_set = PrimeModuleClass()
+
+
 
 
 
