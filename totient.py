@@ -2,25 +2,31 @@ from __future__ import division
 import copy
 
 import number_factors
+import utils
 
 
 
 
 class NumberTotient (object):
     def __init__ (self, copye=None, **kwargs):
-        if copy is not None:
+        if copye is not None:
             if type(copye) is NumberTotient:
-                self.__dict__ = copy.deepcopy( copye.__dict__ )
-                assert 'factorization' in self.__dict__
+                self.factorization = copy.deepcopy(copye.factorization)
+                self.totient = copye.totient
+                return
             elif type(copye) is number_factors.NumberFact:
-                self.factorization =  copye
-                self.calculate_from_scratch()
-            else:
-                self.factorization = number_factors.NumberFact(**kwargs)
-                self.calculate_from_scratch()
+                assert len(kwargs) == 0 
+                self.factorization = copy.deepcopy(copye)
+        else:
+            self.factorization = number_factors.NumberFact(**kwargs)
+
+        self.calculate_from_scratch()
+        assert 'factorization' in self.__dict__
+        assert 'totient' in self.__dict__
 
     def calculate_from_scratch ( self ):
         self.totient = 1
+        print(self)
         for p,v in self.factorization.factorization.items():
             t = self.get_totient_form_prime_power(p, v)
             # t(a * b) =  t(a) * t(b) * gcd(a,b) / t(gcd(a,b))
@@ -46,7 +52,8 @@ class NumberTotient (object):
 
     def __pow__ (self, number):
         assert isinstance(number, int)
-        return NumberTotient( self.factorization ** number )
+        a = self.factorization ** number
+        return NumberTotient( a )
     def __ipow__ (self, number):
         assert isinstance(number, int)
         self.factorization **= number
